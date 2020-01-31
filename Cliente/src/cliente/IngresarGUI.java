@@ -11,7 +11,8 @@ import java.io.*;
  * @author Admin
  */
 public class IngresarGUI extends javax.swing.JFrame {
-
+    
+    
     private void send(String msg)throws IOException{
     
     Socket s;
@@ -32,9 +33,13 @@ public class IngresarGUI extends javax.swing.JFrame {
     /**
      * Creates new form ClienteGUI
      */
-    public IngresarGUI() {
-        initComponents();
+    ClienteGUI parent;
+    public IngresarGUI(ClienteGUI parent) {
+        initComponents();                 
+        this.parent = parent;
+        System.out.print(parent);
     }
+    public IngresarGUI(){}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -191,7 +196,12 @@ public class IngresarGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             this.send(this.jTextField1.getText()+","+this.jTextField2.getText()+","+this.jTextField3.getText()+","+this.jTextField4.getText());
+            
+            parent.loadData();
+            this.dispose();
         }catch(Exception e){System.out.println(e.toString());}
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed

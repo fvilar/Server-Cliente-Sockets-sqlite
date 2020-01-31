@@ -22,14 +22,7 @@ public class ConsultaGUI extends javax.swing.JFrame {
      * Creates new form ConsultaGUI
      */
     public ConsultaGUI() {
-        initComponents();
-        try{
-        s   = new Socket("127.0.0.1",2000);
-        out = new DataOutputStream(s.getOutputStream());        
-        out.writeUTF("Consultar");        
-        in = new DataInputStream(s.getInputStream());
-        jTextArea1.setText(in.readUTF());
-        }catch(Exception e){System.out.println(e.toString());}
+        
     }
 
     /**

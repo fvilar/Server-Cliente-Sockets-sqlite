@@ -15,10 +15,11 @@ public class Cliente {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-     //  IngresarGUI gui = new IngresarGUI();
-       //gui.show();
-       ConsultaGUI gui = new ConsultaGUI();
+       ClienteGUI gui = new ClienteGUI();
+       //  ConsultaGUI gui = new ConsultaGUI();
        gui.show();
+     
+      
     }
     
 }

@@ -1,6 +1,7 @@
 
 package server;
 import java.sql.*;
+import java.util.LinkedList;
 
 public class perJDBClite{
    private static String nameBD="baseZ.db";
@@ -84,7 +85,7 @@ public static String consultarBD() {
 
    Connection c = null;
    Statement stmt = null;
-   String res = "ID\tNOMBRE\n\n";   
+   String res = "";       
    try {
       Class.forName("org.sqlite.JDBC");
       c = DriverManager.getConnection("jdbc:sqlite:"+nameBD);
@@ -95,9 +96,14 @@ public static String consultarBD() {
       ResultSet rs = stmt.executeQuery( "SELECT * FROM PERSONA;" );
       
       while ( rs.next() ) {
-         res += String.valueOf(rs.getInt("p_id"))+"\t";
-         res += rs.getString("p_nombre");         
-         res +="\n";                 
+         res += String.valueOf(rs.getInt("p_id"))+",";
+         res += rs.getInt("p_id")+",";         
+         res += rs.getString("p_nombre")+",";         
+         res += rs.getString("p_apellido")+",";
+         res += rs.getString("p_cedula")+",";
+         res += rs.getInt("p_edad");         
+         
+         res +="-";                          
       }            
       rs.close();
       stmt.close();
