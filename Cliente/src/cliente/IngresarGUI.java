@@ -194,16 +194,23 @@ public class IngresarGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
-            this.send(this.jTextField1.getText()+","+this.jTextField2.getText()+","+this.jTextField3.getText()+","+this.jTextField4.getText());
-            
-            parent.loadData();
-            this.dispose();
+        try{            
+            if(!this.jTextField1.getText().equals("")&&!this.jTextField2.getText().equals("")&&!this.jTextField3.getText().equals("")&&!this.jTextField4.getText().equals("")){
+                this.send(this.jTextField1.getText()+","+this.jTextField2.getText()+","+this.jTextField3.getText()+","+this.jTextField4.getText());            
+                parent.loadData();        
+                this.clear();
+            }
         }catch(Exception e){System.out.println(e.toString());}
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    public void clear(){
+        this.jTextField1.setText("");
+        this.jTextField2.setText("");
+        this.jTextField3.setText("");
+        this.jTextField4.setText("");
+    }
+    
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_button1ActionPerformed
