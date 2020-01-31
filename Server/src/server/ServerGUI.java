@@ -15,15 +15,13 @@ import java.util.StringTokenizer;
  */
 public class ServerGUI extends javax.swing.JFrame {
 
+    private perJDBClite db;
     DataOutputStream dout;
     public void Lisent(){
-        perJDBClite bd = new perJDBClite();
-        //bd.conectarBD();
-        //bd.crearTABLA();
-       ServerSocket ss = null;
-    Socket       s;
-    String sending = "....msn Recibido";
-    String msg;
+        ServerSocket ss = null;
+        Socket       s;
+        String sending = "....msn Recibido";
+        String msg;
 
   try{
           ss = new ServerSocket(2000,20);
@@ -44,13 +42,26 @@ public class ServerGUI extends javax.swing.JFrame {
                      lk.add(element);
                  }
                  if(lk.size()==4){
-                    bd.insertarBD(lk.get(0).toString(),lk.get(1).toString(),lk.get(2).toString(),Integer.parseInt(lk.get(3).toString()));
+                    this.db.insertarBD(lk.get(0).toString(),lk.get(1).toString(),lk.get(2).toString(),Integer.parseInt(lk.get(3).toString()));
                  }  
                  
                  
-                 else if(lk.size()==1&&lk.get(0).toString().equals("Consultar")){
-                     DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-                     dout.writeUTF(bd.consultarBD());	
+                 else{
+                     switch(lk.get(0).toString()){
+                         case "Consultar":
+                            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+                            dout.writeUTF(this.db.consultarBD());
+                         break;
+                         case "Borrar":
+                            this.db.delete(Integer.parseInt(lk.get(1).toString()));
+                         break;
+                             
+                         case "Actualizar":
+                         
+                         break;
+                 
+                     }
+              	
                  }
                // System.out.println(bd.consultarBD());
                 msg="";
@@ -67,6 +78,7 @@ public class ServerGUI extends javax.swing.JFrame {
      */
     public ServerGUI() {
         initComponents();
+        this.db = new perJDBClite();
     }
 
     /**
@@ -122,12 +134,13 @@ public class ServerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.Lisent();
+        this.db.delete(1);
+        this.Lisent();       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        perJDBClite db = new perJDBClite();
+        
         db.crearTABLA();
     }//GEN-LAST:event_jButton2ActionPerformed
 

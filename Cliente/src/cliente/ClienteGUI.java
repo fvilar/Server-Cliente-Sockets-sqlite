@@ -32,11 +32,13 @@ public class ClienteGUI extends javax.swing.JFrame {
     private LinkedList lk;
     private int mousex;
     private int mousey;
+    private String ip;
     public void loadData(){
         
-        try{
+        try{        
             
-        s   = new Socket("127.0.0.1",2000);
+        model.setRowCount(0);
+        s   = new Socket(ip,2000);
         out = new DataOutputStream(s.getOutputStream());        
         out.writeUTF("Consultar");        
         in = new DataInputStream(s.getInputStream());              
@@ -58,6 +60,7 @@ public class ClienteGUI extends javax.swing.JFrame {
     
     public ClienteGUI() {
         initComponents(); 
+        ip = "127.0.0.1";
         this.setBackground(new Color(0,0,0));
         jTable1.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,12));        
         jTable1.getTableHeader().setBackground(new Color(32,136,203));
@@ -87,6 +90,7 @@ public class ClienteGUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -193,8 +197,20 @@ public class ClienteGUI extends javax.swing.JFrame {
         );
 
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Update");
+
+        jButton5.setText("Actualizar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -207,7 +223,9 @@ public class ClienteGUI extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addGap(415, 415, 415))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addGap(336, 336, 336))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,7 +242,8 @@ public class ClienteGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
-                    .addComponent(jButton4)))
+                    .addComponent(jButton4)
+                    .addComponent(jButton5)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,6 +283,22 @@ public class ClienteGUI extends javax.swing.JFrame {
         this.mousex = evt.getX();
         this.mousey = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        try{            
+            s   = new Socket(ip,2000);
+            out = new DataOutputStream(s.getOutputStream());        
+            out.writeUTF("Borrar,"+jTable1.getValueAt(jTable1.getSelectedRow(),0)); 
+            this.loadData();
+        }catch(Exception e){System.out.println(e.toString());}
+                
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.loadData();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +340,7 @@ public class ClienteGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

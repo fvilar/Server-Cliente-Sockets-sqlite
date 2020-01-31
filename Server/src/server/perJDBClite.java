@@ -6,8 +6,7 @@ import java.util.LinkedList;
 public class perJDBClite{
    private static String nameBD="baseZ.db";
 
-   public static void main( String args[] ) {
-                        
+   public static void main( String args[] ) {          
    }
 
 
@@ -62,8 +61,7 @@ public static Boolean insertarBD(String nombre,String apellido,String cedula,int
          System.out.println("Opened database successfully-3");
 
          stmt = c.createStatement();
-         String sql = "INSERT INTO PERSONA (p_nombre,p_apellido,p_cedula,p_edad) VALUES('"+nombre+"','"+apellido+"','"+cedula+"','"+edad+"')"; 
-         System.out.println(sql);
+         String sql = "INSERT INTO PERSONA (p_nombre,p_apellido,p_cedula,p_edad) VALUES('"+nombre+"','"+apellido+"','"+cedula+"','"+edad+"')";          
          stmt.executeUpdate(sql);
          
          stmt.close();
@@ -115,8 +113,37 @@ public static String consultarBD() {
    System.out.println("Operation done successfully");
    return res;
   }   
-}
+    public static Boolean delete(int id) {
+          Connection c = null;
+          Statement stmt = null;
+          Boolean res = false;
+          try {
+             Class.forName("org.sqlite.JDBC");
+             c = DriverManager.getConnection("jdbc:sqlite:"+nameBD);
+             c.setAutoCommit(false);
+             System.out.println("Opened database successfully-3");
 
+             stmt = c.createStatement();
+             String sql = "DELETE FROM PERSONA WHERE PERSONA.p_id='"+id+"'";              
+             stmt.executeUpdate(sql);
+
+             stmt.close();
+             c.commit();
+             c.close();
+             res = true;
+
+          } catch ( Exception e ) {
+             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+             System.exit(0);
+          }
+          System.out.println("Records deleted successfully");
+          return res;
+    }
+
+
+    
+
+}
 
 
 
