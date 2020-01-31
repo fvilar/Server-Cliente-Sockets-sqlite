@@ -140,8 +140,64 @@ public static String consultarBD() {
           return res;
     }
 
+    public static Boolean update(int id,String nombre,String apellido,String cedula,int edad) {
+      Connection c = null;
+      Statement stmt = null;
+      Boolean res = false;
+      try {
+         Class.forName("org.sqlite.JDBC");
+         c = DriverManager.getConnection("jdbc:sqlite:"+nameBD);
+         c.setAutoCommit(false);
+         System.out.println("Opened database successfully-3");
 
-    
+         stmt = c.createStatement();
+         String sql = "UPDATE PERSONA SET p_nombre='"+nombre+"',p_apellido='"+apellido+"',p_cedula='"+cedula+"' ,p_edad= '"+edad+"' where p_id='"+id+"'";          
+         stmt.executeUpdate(sql);
+         
+         stmt.close();
+         c.commit();
+         c.close();
+         res = true;
+
+      } catch ( Exception e ) {
+         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+         System.exit(0);
+      }
+      System.out.println("Records updated successfully");
+      return res;
+   }
+
+    public static String consultarUno(int id) {
+
+   Connection c = null;
+   Statement stmt = null;
+   String res = "";       
+   try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:"+nameBD);
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully-4");
+
+      stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM PERSONA WHERE p_id='"+id+"';" );
+      
+      while ( rs.next() ) {         
+         res += rs.getInt("p_id")+",";         
+         res += rs.getString("p_nombre")+",";         
+         res += rs.getString("p_apellido")+",";
+         res += rs.getString("p_cedula")+",";
+         res += rs.getInt("p_edad");                           
+      }            
+      rs.close();
+      stmt.close();
+      c.close();
+   } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+   }
+   System.out.println("Operation done successfully");
+   return res;
+  }
 
 }
 

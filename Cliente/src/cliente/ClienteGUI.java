@@ -204,6 +204,11 @@ public class ClienteGUI extends javax.swing.JFrame {
         });
 
         jButton4.setText("Update");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Actualizar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +304,26 @@ public class ClienteGUI extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         this.loadData();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        try{                    
+            s   = new Socket(ip,2000);
+            out = new DataOutputStream(s.getOutputStream());        
+            out.writeUTF("Consultar1,"+jTable1.getValueAt(jTable1.getSelectedRow(),0));
+            in = new DataInputStream(s.getInputStream());                             
+            
+            tk = new StringTokenizer(in.readUTF(),",");
+            lk = new LinkedList();
+            while(tk.hasMoreTokens()){                
+                lk.add(tk.nextToken());                                    
+            }                                    
+            IngresarGUI ingresar = new IngresarGUI(this,Integer.parseInt(lk.get(0).toString()),lk.get(1).toString(),lk.get(2).toString(),lk.get(3).toString(),lk.get(4).toString());
+            ingresar.show();
+            
+        }catch(Exception e){System.out.println(e.toString());}
+                
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

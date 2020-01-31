@@ -49,7 +49,7 @@ public class ServerGUI extends javax.swing.JFrame {
                  else{
                      switch(lk.get(0).toString()){
                          case "Consultar":
-                            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+                            dout = new DataOutputStream(s.getOutputStream());
                             dout.writeUTF(this.db.consultarBD());
                          break;
                          case "Borrar":
@@ -57,8 +57,12 @@ public class ServerGUI extends javax.swing.JFrame {
                          break;
                              
                          case "Actualizar":
-                         
+                             this.db.update(Integer.parseInt(lk.get(1).toString()),lk.get(2).toString(),lk.get(3).toString(),lk.get(4).toString(),Integer.parseInt(lk.get(5).toString()));
                          break;
+                         case "Consultar1":
+                             dout = new DataOutputStream(s.getOutputStream());
+                             dout.writeUTF(this.db.consultarUno(Integer.parseInt(lk.get(1).toString())));
+                          break;
                  
                      }
               	

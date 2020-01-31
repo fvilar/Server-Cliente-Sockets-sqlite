@@ -26,7 +26,12 @@ public class IngresarGUI extends javax.swing.JFrame {
 	      msn = msg;	    	
                         s   = new Socket(dirIP,2000);
                         dout = new DataOutputStream(s.getOutputStream());
-                        dout.writeUTF(msn);	                        
+                        if(isUpdate){
+                            dout.writeUTF("Actualizar,"+id+","+msn);	                        
+                        }
+                        else{
+                            dout.writeUTF(msn);	                        
+                        }
 	      s.close();    
     }
     
@@ -36,11 +41,31 @@ public class IngresarGUI extends javax.swing.JFrame {
      */
     ClienteGUI parent;
     public IngresarGUI(ClienteGUI parent) {
-        initComponents();                 
+        initComponents();                         
+                    
         this.parent = parent;        
         this.setBackground(new Color(0,0,0));
+        isUpdate = false;
     }
-    public IngresarGUI(){}
+    
+    private boolean isUpdate;
+    private int id;
+    public IngresarGUI(ClienteGUI parent,int id, String nombre,String apellido,String cedula,String edad) {
+        initComponents();              
+        this.id = id;
+        this.jTextField1.setText(nombre);
+        this.jTextField2.setText(apellido);
+        this.jTextField3.setText(cedula);
+        this.jTextField4.setText(edad);    
+        this.parent = parent;        
+        this.setBackground(new Color(0,0,0));
+        isUpdate = true;
+    }
+    
+    
+    public IngresarGUI(){
+        isUpdate = false;    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
